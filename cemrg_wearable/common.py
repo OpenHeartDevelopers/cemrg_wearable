@@ -8,7 +8,9 @@ import seaborn as sns
 
 def get_subject_dataset(filein, subject, timestr, ycol, remove_zero=True) : 
     df=pd.read_csv(filein)
-    
+    return get_subject_dataset_from_df(df, subject, timestr, ycol, remove_zero)
+
+def get_subject_dataset_from_df(df, subject, timestr, ycol, remove_zero=True) :
     casedf=df[df['SUBJECT CODE']==subject]
     
     if subject not in df['SUBJECT CODE'].values:
@@ -25,8 +27,13 @@ def get_subject_dataset(filein, subject, timestr, ycol, remove_zero=True) :
     max_date = casedf['timestamp'].max()
     # Calculate the time difference in hours between each datetime and the minimum date
     casedf['hours'] = (casedf['timestamp'] - min_date).dt.total_seconds() / 3600
+    
+    casedf['days'] = (casedf['timestamp'] - min_date).dt.total_seconds() / (3600*24)
+    # Optionally, you can round the hours to integers
+    #casedf['hours'] = casedf['hours'].round().astype(int)   
 
     return casedf
+
 
 def get_list_of_dates(casedf: pd.DataFrame) : 
     # get number of unique dates in the dataframe
@@ -100,3 +107,23 @@ def process_atom5_wearable_data(path_to_data, casename, y_data_key):
     case_table['time'] = pd.to_datetime(case_table[timecolname].str[:-strnum], format=format, utc=True)
 
     return case_table
+
+
+def get_name(dir: str, prefix: str, some_date:str) -> str: 
+    
+    mypath = os.path.join(dir, f'{prefix}-data-{some_date}', 'wearable')
+    bpm = f'{prefix}-{some_date}-raw-garmin-data-heartrate_logged-report.csv'
+    spo2 = f'{prefix}-{some_date}-raw-garmin-data-spo2-report.csv'
+    steps = f'{prefix}-{some_date}-raw-garmin-data-steps_logged-report.csv'
+
+    mydic ={
+        'path' : mypath,
+        'bpm' : bpm,
+        'spo2' : spo2,
+        'steps' : steps
+    }
+
+    return mydic
+
+
+

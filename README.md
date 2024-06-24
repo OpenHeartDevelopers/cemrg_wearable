@@ -31,3 +31,9 @@ Copy the following to install the python dependencies of this project
 ```
 conda install -c conda-forge pandas matplotlib bs4 requests numpy seaborn -n cemrg_wearable -y
 ```
+
+You might need to set your `PYTHONPATH` to work on this repository. Move into this folder and type 
+```shell
+export PYTHONPATH=$PYTHONPATH:$(pwd) 
+```
+
