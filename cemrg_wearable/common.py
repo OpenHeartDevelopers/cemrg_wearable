@@ -17,6 +17,8 @@ def get_subject_dataset_from_df(df, subject, timestr, ycol, remove_zero=True) :
         print(f"DataFrame does not contain entry with subject code {subject}")
         return 0
     
+    print(casedf)
+    
     if remove_zero: 
         casedf=casedf[casedf[ycol]!=0]
 
@@ -109,7 +111,9 @@ def process_atom5_wearable_data(path_to_data, casename, y_data_key):
     return case_table
 
 
-def get_name(dir: str, prefix: str, some_date:str) -> str: 
+def get_data_keys() -> list: 
+    return ['BEATS PER MIN', 'SPO2', 'TOTALSTEPS', 'LONGITUDE', 'LATITUDE']
+def get_name(dir: str, prefix: str, some_date:str) -> dict: 
     
     mypath = os.path.join(dir, f'{prefix}-data-{some_date}', 'wearable')
     bpm = f'{prefix}-{some_date}-raw-garmin-data-heartrate_logged-report.csv'
@@ -118,12 +122,32 @@ def get_name(dir: str, prefix: str, some_date:str) -> str:
 
     mydic ={
         'path' : mypath,
-        'bpm' : bpm,
-        'spo2' : spo2,
-        'steps' : steps
+        'BEATS PER MIN' : bpm,
+        'SPO2' : spo2,
+        'TOTALSTEPS' : steps, 
+        'LONGITUDE' : steps, 
+        'LATITUDE' : steps,
     }
 
     return mydic
 
+def get_time_col_name(key: str) -> str: 
+    timecolname_dic = {
+        'BEATS PER MIN': 'TIMESTAMP',
+        'SPO2': 'TIMESTAMP',
+        'TOTALSTEPS': 'DATA SOURCE',
+        'LONGITUDE': 'DATA SOURCE',
+        'LATITUDE': 'DATA SOURCE'
+    }
+    return timecolname_dic[key.upper()]
 
+def get_str_num(key: str) -> int:
+    strnum_dic = {
+        'BEATS PER MIN': 15,
+        'SPO2': 15,
+        'TOTALSTEPS': 9,
+        'LONGITUDE': 9,
+        'LATITUDE': 9
+    }
+    return strnum_dic[key.upper()]
 

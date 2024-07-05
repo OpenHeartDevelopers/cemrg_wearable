@@ -37,3 +37,16 @@ You might need to set your `PYTHONPATH` to work on this repository. Move into th
 export PYTHONPATH=$PYTHONPATH:$(pwd) 
 ```
 
+
+## Weather data
+You need to get your API key! 
+
+> NOTE! It is not good practice to leave the API key on github! 
+
+Get your API key from [here](https://openweathermap.org/appid), then save it in a file called `apikey.txt`, 
+which **will only be available in your computer**! That name is ignored by git. 
+
+Then you can call the function `weather_utils.get_weather()`. See [this notebook](./ipynb/process_atom_5_data.ipynb)  
+for an example.
+
+Also, check [this website](https://openweathermap.org/weather-conditions) for the weather codes and conditions.

@@ -11,12 +11,15 @@ from cemrg_wearable.common import get_subject_dataset, get_subject_dataset_from_
 def plot_data(filein, subject, timestr, ycol, ax1, remove_zero=True, fig1=None):
     
     casedf = get_subject_dataset(filein, subject, timestr, ycol, remove_zero)
-    plot_from_df(casedf, subject, timestr, ycol, ax1, remove_zero, fig1)
+    plot_from_case_df(casedf, ycol, ax1, fig1)
 
 
 def plot_from_df(df, subject, timestr, ycol, ax1, remove_zero=True, fig1=None):
     
     casedf = get_subject_dataset_from_df(df, subject, timestr, ycol, remove_zero)
+    plot_from_case_df(casedf, ycol, ax1, fig1)
+
+def plot_from_case_df(casedf, ycol, ax1, fig1=None):
 
     ax1.plot(casedf['days'].values, casedf[ycol].values, '*')
     ax1.set_xlabel('Time(days)')

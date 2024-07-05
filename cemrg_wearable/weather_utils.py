@@ -50,4 +50,29 @@ def get_historical_weather(api_key, latitude, longitude, date):
     else:
         print("Failed to retrieve data. Status code:", response.status_code)
         return None
+    
+def get_weather(api_key, latitude, longitude, which_date):
+    # OpenWeatherMap API endpoint for historical data
+    url = f"http://api.openweathermap.org/data/2.5/weather"
+    
+    # Parameters for the API request
+    params = {
+        'lat': latitude,
+        'lon': longitude,
+        'dt': int(which_date.timestamp()),
+        'units': 'metric',  # Use 'imperial' for Fahrenheit
+        'appid': api_key
+    }
+    
+    # Making the API request
+    response = requests.get(url, params=params)
+    print(response.url)
+    
+    # Checking if the request was successful
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        print(f"Error: {response.status_code}")
+        return None
 
